@@ -8,6 +8,9 @@ const swaggerJsdoc = require('swagger-jsdoc');
 // Importar Rotas
 const curriculoRoutes = require('./routes/curriculoRoutes');
 
+// Importar o script de inicialização do banco de dados
+const createTables = require('./initDB');
+
 dotenv.config();
 
 const app = express();
@@ -45,8 +48,15 @@ app.get('/', (req, res) => {
     res.send('API de Currículo está funcionando!');
 });
 
-// Iniciar Servidor
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Servidor rodando na porta ${PORT}`);
-});
+// Função para iniciar o servidor após a criação das tabelas
+const startServer = async () => {
+    await createTables(); // Cria as tabelas
+
+    // Iniciar Servidor
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => {
+        console.log(`Servidor rodando na porta ${PORT}`);
+    });
+};
+
+startServer();

@@ -1,5 +1,5 @@
 // controllers/curriculoController.js
-const pool = require('../db/db');
+const pool = require('../db');
 
 // Função para obter todos os currículos
 const getAllCurriculos = async (req, res) => {
